@@ -41,7 +41,7 @@ class ImageDataset(torch.utils.data.Dataset):
 
         try:
             # Attempt to open the image
-            image = Image.open(img_name)
+            image = Image.open(img_name).convert('RGB')
         except (UnidentifiedImageError, OSError):
             raise ValueError(f"Failed to open image file '{img_name}'.")
 
@@ -71,7 +71,9 @@ dataloader = DataLoader(dataset, batch_size=64, shuffle=True)
 
 # Load a pre-trained ResNet model
 model = models.resnet18(pretrained=True)
-model.fc = nn.Linear(model.fc.in_features, len(dataset.classes))  # Adjust the output size for classification
+num_classes = len(dataset.classes)
+
+model.fc = nn.Linear(model.fc.in_features, num_classes) # Adjust the output size for classification
 
 # Define loss function and optimizer
 criterion = nn.CrossEntropyLoss()

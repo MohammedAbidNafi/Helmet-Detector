@@ -8,7 +8,7 @@ import torch.nn as nn
 
 # Load the trained model
 model = models.resnet18(pretrained=False)
-model.fc = nn.Linear(model.fc.in_features, 2)  # Adjust the output size for binary classification
+model.fc = nn.Linear(model.fc.in_features, 3)  # Adjust the output size for binary classification
 model.load_state_dict(torch.load('helmet_classifier.pth'))
 model.eval()
 
@@ -48,9 +48,9 @@ if __name__ == '__main__':
         image = Image.open(image_path)
         predicted_class = classify_image(image)
 
-        if predicted_class == 1:
+        if predicted_class == 2:
             print(f"\n \n The Rider in {image_path} is not wearing a helmet! \n \n")
-        elif predicted_class == 0:
+        elif predicted_class == 1:
             print(f"\n \n The Rider in {image_path} is wearing a helmet! \n \n")
-        elif predicted_class != 0 & predicted_class !=1:
+        elif predicted_class == 0:
             print(f"\n \n Not able to recognise what is happening here in {image_path}! \n \n")
