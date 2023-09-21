@@ -30,7 +30,7 @@ def classify_image(image):
     return predicted_class.item()
 
 # Open a video capture object for the default camera (you can change the camera index if needed)
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 while True:
     # Read a frame from the camera
